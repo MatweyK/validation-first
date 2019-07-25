@@ -6,8 +6,8 @@ let tables = [
     rows: [
       {
         currentYear: "2019",
-        jan: "2",
-        feb: "123",
+        jan: "2.2222",
+        feb: "123.123123",
         mar: "",
         q1: "",
         apr: "",
@@ -285,8 +285,42 @@ document.addEventListener('DOMContentLoaded', function () {
 function insertAfter(elem, refElem) {
   return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
 }
-//AJAX
+
+//AJAX and quartals
 submitButton.addEventListener('click', function () {
+  tables.forEach(function (element, index) {
+    element.rows.forEach(function (element, index){
+
+      element['q1'] = Math.round((((Math.round((parseFloat(element['jan'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['feb'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['mar'])|| 0)*100)/100) 
+        +1)
+      /3)*100)/100;
+       element['q2'] = Math.round((((Math.round((parseFloat(element['apr'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['may'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['jun'])|| 0)*100)/100) 
+        +1)
+       /3)*100)/100;
+       element['q3'] = Math.round((((Math.round((parseFloat(element['jul'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['aug'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['sep'])|| 0)*100)/100) 
+        +1)
+       /3)*100)/100;
+       element['q4'] = Math.round((((Math.round((parseFloat(element['oct'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['nov'])|| 0)*100)/100 
+        + Math.round((parseFloat(element['dec'])|| 0)*100)/100) 
+        +1)
+       /3)*100)/100;
+
+       console.log(element['q1'])
+       console.log(element['q2'])
+       // console.log(element['q3'])
+       // console.log(element['q4'])
+       element['ytd'] = Math.round((((element['q1'] + element['q2'] + element['q3'] + element['q4']) +1)/4)*100)/100;
+       // console.log(element['ytd'])
+
+    })
+  })
   // 1. Создаём новый объект XMLHttpRequest
   var xhr = new XMLHttpRequest();
 
