@@ -1,28 +1,24 @@
 table{
-	border: 1px solid black;
-	border-collapse: collapse;
-
+  border: 1px solid black;
+  border-collapse: collapse;
 }
-
 th,td {
-	border: 1px solid black;
-	padding: 5px;
+  border: 1px solid black;
+  padding: 5px;
 }
-
 input {
-	width:100%;
-	border: none;
-    box-sizing: border-box;
-
+  width:100%;
+  border: none;
+  box-sizing: border-box;
 }
 
 th:nth-child(5), td:nth-child(5), td:nth-child(5) input,
 th:nth-child(9), td:nth-child(9), td:nth-child(9) input,
 th:nth-child(13), td:nth-child(13), td:nth-child(13) input,
 th:nth-child(17), td:nth-child(17), td:nth-child(17) input{
-	background-color: #bce1ec;
+  background-color: #bce1ec;
 }
 
 th:nth-child(18), td:nth-child(18), td:nth-child(18) input{
-		background-color: #e0798b;
+  background-color: #e0798b;
 }
