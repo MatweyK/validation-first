@@ -312,12 +312,8 @@ submitButton.addEventListener('click', function () {
         +1)
        /3)*100)/100;
 
-       console.log(element['q1'])
-       console.log(element['q2'])
-       // console.log(element['q3'])
-       // console.log(element['q4'])
        element['ytd'] = Math.round((((element['q1'] + element['q2'] + element['q3'] + element['q4']) +1)/4)*100)/100;
-       // console.log(element['ytd'])
+
 
     })
   })

@@ -6,94 +6,8 @@ if (isset($postdata) && !empty($postdata)) {
   $request = json_decode($postdata, TRUE);
 }
 //////////////////////////////////////////////
-//VALIDATE QUARTALS
-$firstQuartal = [];
-$secondQuartal = [];
-$thirdQuartal = [];
-$fourthQuartal = [];
-foreach ($request as $value) {
-  foreach ($value as $key => $valueTwo) {
-    if ($key == 'rows') {
-      
-      foreach ($valueTwo as $keyThree => $valueThree) {
-
-
-      	$qOne = [];
-        $qTwo = [];
-        $qThree = [];
-        $qFour = [];
-      	foreach ($valueThree as $key => $valueFour) {
-
-      		
-     	if (($key == 'jan')|| ($key == 'feb') || ($key == 'mar')){
-      			$qOne[] = floatval($valueFour ?? 0);
-      		}
-      		if (($key == 'apr')|| ($key == 'may') || ($key == 'jun')){
-      			$qTwo[] = floatval($valueFour ?? 0);
-      		}
-      		if (($key == 'jul')|| ($key == 'aug') || ($key == 'sep')){
-      			$qThree[] = floatval($valueFour ?? 0);
-      		}
-      		if (($key == 'oct')|| ($key == 'nov') || ($key == 'dec')){
-      			$qFour[] = floatval($valueFour ?? 0);
-      		}
-
-      	}
-
-        $firstQuartal[] = $qOne;
-        $secondQuartal[] = $qTwo;
-        $thirdQuartal[] = $qThree;
-        $fourthQuartal[] = $qFour;
-       //  // print_r(validateQuartals($firstQuartal));
-       //  // print_r($valueThree['q1']);
-
-       //  if (abs(validateQuartals($firstQuartal) - $valueThree['q1']) < 0.05){
-       //  	return http_response_code(400);
-       //  }
-       //  if (abs(validateQuartals($firstQuartal) - $valueThree['q2']) < 0.05){
-       //  	return http_response_code(400);
-       //  }
-       //  if (abs(validateQuartals($firstQuartal) - $valueThree['q3']) < 0.05){
-       //  	return http_response_code(400);
-       //  }
-       //  if (abs(validateQuartals($firstQuartal) - $valueThree['q4']) < 0.05){
-       //  	return http_response_code(400);
-       //  }
-       //  validateYtd($valueThree['ytd']);
-       
-     }
-    }
-  }
-}
-print_r($firstQuartal);
-
-// function validateQuartals(array $arr){
-// 	$sum = 0.0;
-// 	foreach ($arr as $key => $value) {
-// 		foreach ($value as $key => $value) {
-// 			$sum += $value;
-// 		}
-// 	}
-// 	$sum += 1;
-// 	return $sum != 1 ? round(($sum / 3),2) : 0;
-
-// }
-// function validateYtd($ytd){
-//   if (abs((validateQuartals($firstQuartal) 
-//   		+ validateQuartals($secondQuartal) 
-//   		+ validateQuartals($thirdQuartal) 
-//   		+ validateQuartals($fourthQuartal) 
-//   		+1)/4 ?? 0 - $ytd) < 0.05)
-//   {
-//  	return http_response_code(400);
-//   }
-//   return true;
-// }
-
-//////////////////////////////////////////////
-//  VALIDATE YEARS
+//VALIDATE YEARS
 $yearDataArray = [];
-
 foreach ($request as $value) {
   foreach ($value as $key => $valueTwo) {
     if ($key == 'rows') {
@@ -111,18 +25,15 @@ foreach ($yearDataArray as $value) {
     $arrayLength = count($value);
     $arrayLastIndex = $value[$arrayLength - 1];
     $rangedArr = range(2019, $arrayLastIndex);
-
     if ($value != $rangedArr) {
-      return http_response_code(400);////???????????????????
+      return http_response_code(400);
     }
   }
 }
-
 // unset($yearDataArray);????
 /////////////////////////////////////
 //VALIDATE ALL ROWS GAP TOGETHER
 $rowsDataArray = [];
-
 foreach ($request as $value) {
   foreach ($value as $key1 => $value1) {
     if ($key1 == 'rows') {
@@ -140,7 +51,6 @@ foreach ($request as $value) {
     }
   }
 }
-
 foreach ($rowsDataArray as $value) {
   $start = FALSE;
   $finish = FALSE;;
@@ -194,8 +104,27 @@ function isEqual(array $arr) {
   }
   return true;
 }
-
-if (isEqual($startPos) && isEqual($endPos) 
+//////////////////////////////////////////////
+//VALIDATE QUARTALS
+foreach ($request as $value) {
+  foreach ($value as $key => $valueTwo) {
+    if ($key == 'rows') {
+      foreach ($valueTwo as $keyThree => $valueThree) {
+        if (((abs($valueThree['jan'] ?? 0 + $valueThree['feb'] ?? 0 + $valueThree['mar'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005)
+          || ((abs($valueThree['apr']?? 0 + $valueThree['may'] ?? 0 + $valueThree['jun'] ?? 0)+1)/3 - $valueThree['q2'] > 0.005)
+          || ((abs($valueThree['jul'] ?? 0 + $valueThree['aug'] ?? 0 + $valueThree['sep'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005)
+          || ((abs($valueThree['oct'] ?? 0 + $valueThree['nov'] ?? 0 + $valueThree['dec'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005))
+        {
+          return http_response_code(400);
+        }
+        if ((abs($valueThree['q1'] + $valueThree['q2'] + $valueThree['q3']+ $valueThree['q4'])+1)/4 - $valueThree['ytd'] > 0.005){
+          return http_response_code(400);
+        }
+      }
+    }
+  }
+}
+if (isEqual($startPos) && isEqual($endPos)
 	// && validateYtd()
 ) {
   http_response_code(200);
