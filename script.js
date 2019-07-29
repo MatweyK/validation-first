@@ -298,11 +298,7 @@ submitButton.addEventListener('click', function () {
     	else{
     		element['q1'] = 0;
     	}
-      // element['q1'] = Math.round((((Math.round((parseFloat(element['jan'])|| 0)*100)/100 
-      //   + Math.round((parseFloat(element['feb'])|| 0)*100)/100 
-      //   + Math.round((parseFloat(element['mar'])|| 0)*100)/100) 
-      //   +1)
-      // /3)*100)/100;
+
       	let sumSecond = Math.round((parseFloat(element['apr'])|| 0)*100)/100 + Math.round((parseFloat(element['may'])|| 0)*100)/100 + Math.round((parseFloat(element['jun'])|| 0)*100)/100;
     	if (sumSecond !=0 ) {
     		element['q2'] = Math.round(((sumSecond +1)/3)*100)/100;
@@ -310,11 +306,7 @@ submitButton.addEventListener('click', function () {
     	else{
     		element['q2'] = 0;
     	}
-       // element['q2'] = Math.round((((Math.round((parseFloat(element['apr'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['may'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['jun'])|| 0)*100)/100) 
-       //  +1)
-       // /3)*100)/100;
+
 		let sumThird = Math.round((parseFloat(element['jul'])|| 0)*100)/100 + Math.round((parseFloat(element['aug'])|| 0)*100)/100 + Math.round((parseFloat(element['sep'])|| 0)*100)/100;
     	if (sumThird !=0 ) {
     		element['q3'] = Math.round(((sumThird +1)/3)*100)/100;
@@ -322,11 +314,7 @@ submitButton.addEventListener('click', function () {
     	else{
     		element['q3'] = 0;
     	}       
-       // element['q3'] = Math.round((((Math.round((parseFloat(element['jul'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['aug'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['sep'])|| 0)*100)/100) 
-       //  +1)
-       // /3)*100)/100;
+
 		let sumFourth = Math.round((parseFloat(element['oct'])|| 0)*100)/100 + Math.round((parseFloat(element['nov'])|| 0)*100)/100 + Math.round((parseFloat(element['dec'])|| 0)*100)/100;
 		if (sumFourth !=0 ) {
 			element['q4'] = Math.round(((sumFourth +1)/3)*100)/100;
@@ -335,11 +323,7 @@ submitButton.addEventListener('click', function () {
 			element['q4'] = 0;
 		} 
 
-       // element['q4'] = Math.round((((Math.round((parseFloat(element['oct'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['nov'])|| 0)*100)/100 
-       //  + Math.round((parseFloat(element['dec'])|| 0)*100)/100) 
-       //  +1)
-       // /3)*100)/100;
+
 
         let yearSum = element['q1'] + element['q2'] + element['q3'] + element['q4'];
         if (yearSum != 0) {
@@ -348,9 +332,6 @@ submitButton.addEventListener('click', function () {
         else {
         	element['ytd'] = 0;
         }
-       // element['ytd'] = Math.round((((element['q1'] + element['q2'] + element['q3'] + element['q4']) +1)/4)*100)/100;
-
-
     })
   })
   // 1. Создаём новый объект XMLHttpRequest

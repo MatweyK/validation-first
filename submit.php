@@ -110,16 +110,32 @@ foreach ($request as $value) {
   foreach ($value as $key => $valueTwo) {
     if ($key == 'rows') {
       foreach ($valueTwo as $keyThree => $valueThree) {
-        if (((abs($valueThree['jan'] ?? 0 + $valueThree['feb'] ?? 0 + $valueThree['mar'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005)
-          || ((abs($valueThree['apr']?? 0 + $valueThree['may'] ?? 0 + $valueThree['jun'] ?? 0)+1)/3 - $valueThree['q2'] > 0.005)
-          || ((abs($valueThree['jul'] ?? 0 + $valueThree['aug'] ?? 0 + $valueThree['sep'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005)
-          || ((abs($valueThree['oct'] ?? 0 + $valueThree['nov'] ?? 0 + $valueThree['dec'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005))
-        {
-          return http_response_code(400);
+        if ($valueThree['q1'] != 0) {
+          if ((abs($valueThree['jan'] ?? 0 + $valueThree['feb'] ?? 0 + $valueThree['mar'] ?? 0)+1)/3 - $valueThree['q1'] > 0.005) {
+            return http_response_code(400);
+          }
         }
-        if ((abs($valueThree['q1'] + $valueThree['q2'] + $valueThree['q3']+ $valueThree['q4'])+1)/4 - $valueThree['ytd'] > 0.005){
-          return http_response_code(400);
+        if ($valueThree['q2'] != 0) {
+          if ((abs($valueThree['apr'] ?? 0 + $valueThree['may'] ?? 0 + $valueThree['jun'] ?? 0)+1)/3 - $valueThree['q2'] > 0.005) {
+            return http_response_code(400);
+          }
         }
+        if ($valueThree['q3'] != 0) {
+          if ((abs($valueThree['jul'] ?? 0 + $valueThree['aug'] ?? 0 + $valueThree['sep'] ?? 0)+1)/3 - $valueThree['q3'] > 0.005) {
+            return http_response_code(400);
+          }
+        }
+        if ($valueThree['q4'] != 0) {
+          if ((abs($valueThree['oct'] ?? 0 + $valueThree['nov'] ?? 0 + $valueThree['dec'] ?? 0)+1)/3 - $valueThree['q4'] > 0.005) {
+            return http_response_code(400);
+          }
+        }
+        if ($valueThree['ytd'] != 0) {
+          if ((abs($valueThree['q1'] + $valueThree['q2'] + $valueThree['q3']+ $valueThree['q4'])+1)/4 - $valueThree['ytd'] > 0.005){
+          return http_response_code(400);
+          }
+        }
+        
       }
     }
   }
