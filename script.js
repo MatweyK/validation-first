@@ -6,8 +6,8 @@ let tables = [
     rows: [
       {
         currentYear: "2019",
-        jan: "2.2222",
-        feb: "123.123123",
+        jan: "",
+        feb: "",
         mar: "",
         q1: "",
         apr: "",
@@ -24,53 +24,10 @@ let tables = [
         q4: "",
         ytd: ""
       },
-      {
-        currentYear: "2018",
-        jan: "3",
-        feb: "123",
-        mar: "",
-        q1: "",
-        apr: "",
-        may: "",
-        jun: "",
-        q2: "",
-        jul: "",
-        aug: "",
-        sep: "",
-        q3: "",
-        oct: "",
-        nov: "",
-        dec: "",
-        q4: "",
-        ytd: ""
-      },
+      
     ],
   },
-  {
-    class: "table-1",
-    rows: [
-      {
-        currentYear: "2019",
-        jan: "3",
-        feb: "123",
-        mar: "123",
-        q1: "",
-        apr: "",
-        may: "",
-        jun: "",
-        q2: "",
-        jul: "",
-        aug: "",
-        sep: "",
-        q3: "",
-        oct: "",
-        nov: "",
-        dec: "",
-        q4: "",
-        ytd: ""
-      },
-    ],
-  },
+  
 ];
 
 const secretTemplate = document.querySelector('#secret-template');// select teamplate tag
@@ -334,6 +291,20 @@ submitButton.addEventListener('click', function () {
         }
     })
   })
+
+
+///@TODO adding quartalsSum
+  // let firstQuartals = document.querySelectorAll('.q1');
+  // firstQuartals.forEach(function(element){
+  //     let firstMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+  //     let FirstQuartalSum = Math.round((parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling)|| 0)*100)/100 + Math.round((parseFloat(element.previousElementSibling.previousElementSibling)|| 0)*100)/100 + Math.round((parseFloat((element.previousElementSibling))|| 0)*100)/100;
+  //     element.textContent = firstMonth;
+  //   // element.textContent = 
+  // },false)
+
+
+
+
   // 1. Создаём новый объект XMLHttpRequest
   var xhr = new XMLHttpRequest();
 
@@ -356,4 +327,5 @@ submitButton.addEventListener('click', function () {
   xhr.onerror = function (e) {
     console.log(e);
   }
+
 }, false)
