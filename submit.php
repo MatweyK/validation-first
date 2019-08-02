@@ -51,7 +51,7 @@ foreach ($request as $value) {
     }
   }
 }
-//Check for gap in rows
+//Check for gap in all rows
 foreach ($rowsDataArray as $value) {
   $start = FALSE;
   $finish = FALSE;;
@@ -59,7 +59,7 @@ foreach ($rowsDataArray as $value) {
     if ($v != "") {
       $start = TRUE;
       if ($finish) {
-        return http_response_code(400);
+        return http_response_code(401);
       }
     }
     else {
@@ -74,11 +74,12 @@ foreach ($rowsDataArray as $value) {
 }
 ////////////////////////////////////////////////////
 //VALIDATE TABLES DIFF
+
 $startPos = [];
 $endPos = [];
 foreach ($rowsDataArray as $key => $value) {
   if ($value != '') {
-    $filteredArr =array_filter($value);
+    $filteredArr = array_filter($value, function($name) { return $name === '0' ? true : !empty($name); });
 	$arrays =$filteredArr;
 	$filteredArr=array();
 	$i=0;
@@ -90,6 +91,8 @@ foreach ($rowsDataArray as $key => $value) {
   }
 	$keysArr = array_keys($filteredArr);
 
+
+
   if (count($keysArr) > 0) {
     $startPos[] = $keysArr[0];
     $endPos[] = $keysArr[count($keysArr) - 1];
@@ -100,6 +103,9 @@ foreach ($rowsDataArray as $key => $value) {
   }
     
 }
+// unset($rowsDataArray);
+// unset($startPos);
+// unset($endPos);
 //////////////////////////////////////////////
 //VALIDATE QUARTALS
 foreach ($request as $value) {
@@ -142,5 +148,5 @@ if ((count(array_unique($startPos)) === 1) && (count(array_unique($endPos)) === 
   echo json_encode($request);
 }
 else {
-  http_response_code(400);
+  http_response_code(402);
 }

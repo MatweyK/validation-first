@@ -124,10 +124,56 @@ addNewTable.addEventListener('click', function () {
       ytd: ""
     });
 
-//react on input for add table
+//react on input for added table
 
   }, false);
+  function sumQuartal(el){
+    el.forEach(function(element){
+      let firstMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+        let secondMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+        let thirdMonth = Math.round(parseFloat(element.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+
+        let quartalSum = firstMonth + secondMonth + thirdMonth;
+        if (quartalSum != 0) {
+          element.textContent = Math.round(((quartalSum +1)/3)*100)/100;
+        }
+        else{
+          element.textContent = 0;
+        }
+    }, false)
+  };
+
+ 
+        
+     
   newTab.addEventListener('input', function (e) {
+      ///@TODO adding quartalsSum
+      let firstQuartals = document.querySelectorAll('.q1');
+      let secondQuartals = document.querySelectorAll('.q2');
+      let thirdQuartals = document.querySelectorAll('.q3');
+      let fourthQuartals = document.querySelectorAll('.q4');
+
+      sumQuartal(firstQuartals);
+      sumQuartal(secondQuartals);
+      sumQuartal(thirdQuartals);
+      sumQuartal(fourthQuartals);
+
+      let quartalsSum = document.querySelectorAll('.YTD');
+      quartalsSum.forEach(function(element){
+        let qFirst = parseFloat(element.parentNode.querySelector(':nth-child(5)').textContent);
+        let qSecond = parseFloat(element.parentNode.querySelector(':nth-child(9)').textContent);
+        let qThird = parseFloat(element.parentNode.querySelector(':nth-child(13)').textContent);
+        let qFourth = parseFloat(element.previousElementSibling.textContent);
+        let ySum = qFirst + qSecond + qThird + qFourth;
+        if (ySum != 0) {
+          element.textContent = Math.round(((ySum +1)/3)*100)/100;
+        }
+        else{
+          element.textContent = 0;
+        }
+
+      }, false);
+      ///////////////////////////
 
 
     let tableIndex = Number(newTab.className.substring(6));
@@ -228,8 +274,51 @@ document.addEventListener('DOMContentLoaded', function () {
     }, false);
 
 ////////////////////////////////////////////////////////////////////////////////////////
+  function sumQuartal(el){
+    el.forEach(function(element){
+      let firstMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+        let secondMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+        let thirdMonth = Math.round(parseFloat(element.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
+
+        let quartalSum = firstMonth + secondMonth + thirdMonth;
+        if (quartalSum != 0) {
+          element.textContent = Math.round(((quartalSum +1)/3)*100)/100;;
+        }
+        else{
+          element.textContent = 0;
+        }
+    }, false)
+  };
 //react on any change in tables inputes	that loaded
     newTable.addEventListener('input', function (e) {
+
+      ///@TODO adding quartalsSum
+      let firstQuartals = document.querySelectorAll('.q1');
+      let secondQuartals = document.querySelectorAll('.q2');
+      let thirdQuartals = document.querySelectorAll('.q3');
+      let fourthQuartals = document.querySelectorAll('.q4');
+      sumQuartal(firstQuartals);
+      sumQuartal(secondQuartals);
+      sumQuartal(thirdQuartals);
+      sumQuartal(fourthQuartals);
+
+      ///////////////////////////
+      let quartalsSum = document.querySelectorAll('.YTD');
+      quartalsSum.forEach(function(element){
+        let qFirst = parseFloat(element.parentNode.querySelector(':nth-child(5)').textContent);
+        let qSecond = parseFloat(element.parentNode.querySelector(':nth-child(9)').textContent);
+        let qThird = parseFloat(element.parentNode.querySelector(':nth-child(13)').textContent);
+        let qFourth = parseFloat(element.previousElementSibling.textContent);
+        let ySum = qFirst + qSecond + qThird + qFourth;
+        if (ySum != 0) {
+          element.textContent = Math.round(((ySum +1)/3)*100)/100;
+        }
+        else{
+          element.textContent = 0;
+        }
+
+      }, false);
+      ///////////////////////////
       let input = e.target;
       let inputClass = e.target.className;
       let rowIndex = Number(e.target.parentNode.parentNode.parentNode.className.substring(4));
@@ -292,19 +381,6 @@ submitButton.addEventListener('click', function () {
     })
   })
 
-
-///@TODO adding quartalsSum
-  // let firstQuartals = document.querySelectorAll('.q1');
-  // firstQuartals.forEach(function(element){
-  //     let firstMonth = Math.round(parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.firstChild.value || 0)*100)/100;
-  //     let FirstQuartalSum = Math.round((parseFloat(element.previousElementSibling.previousElementSibling.previousElementSibling)|| 0)*100)/100 + Math.round((parseFloat(element.previousElementSibling.previousElementSibling)|| 0)*100)/100 + Math.round((parseFloat((element.previousElementSibling))|| 0)*100)/100;
-  //     element.textContent = firstMonth;
-  //   // element.textContent = 
-  // },false)
-
-
-
-
   // 1. Создаём новый объект XMLHttpRequest
   var xhr = new XMLHttpRequest();
 
@@ -319,6 +395,12 @@ submitButton.addEventListener('click', function () {
     if (xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
       alert('SUCCESS! :DDDDDDDDDD');
+    }
+    else if(xhr.status === 401){
+      alert('Rows must have no gaps');
+    }
+    else if(xhr.status === 402){
+      alert('The same tables values must be filled');
     }
     else {
       alert('INVALID :d');
