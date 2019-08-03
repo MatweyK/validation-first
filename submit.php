@@ -19,7 +19,6 @@ foreach ($request as $value) {
     }
   }
 }
-
 foreach ($yearDataArray as $value) {
   if (count($value) > 1) {
     $arrayLength = count($value);
@@ -34,17 +33,23 @@ foreach ($yearDataArray as $value) {
 /////////////////////////////////////
 //VALIDATE ROWS
 $rowsDataArray = [];
+$startPosArr = [];
+$lastPosArr = [];
 foreach ($request as $value) {
   foreach ($value as $key1 => $value1) {
     if ($key1 == 'rows') {
       $reversedValue1 = array_reverse($value1);
       $newArr = [];
+      $newArr2 = [];
+      $newArr3 = [];
+
       foreach ($reversedValue1 as $key2 => $value2) {
+        $firstPos = "";
         foreach ($value2 as $key3 => $value3) {
           if (($key3 == 'currentYear') || ($key3 == 'q1') || ($key3 == 'q2') || ($key3 == 'q3') || ($key3 == 'q4') || ($key3 == 'ytd')) {
             continue;
           }
-          $newArr[] = $value3;
+          $newArr["{$value2['currentYear']}-{$key3}"] = $value3;
         }
       }
       $rowsDataArray[] = $newArr;
@@ -74,24 +79,17 @@ foreach ($rowsDataArray as $value) {
 }
 ////////////////////////////////////////////////////
 //VALIDATE TABLES DIFF
+foreach ($startPosArr as $key => $value) {
+  print_r(array_diff($value, next()));
+};
 
 $startPos = [];
 $endPos = [];
 foreach ($rowsDataArray as $key => $value) {
   if ($value != '') {
     $filteredArr = array_filter($value, function($name) { return $name === '0' ? true : !empty($name); });
-	$arrays =$filteredArr;
-	$filteredArr=array();
-	$i=0;
-	foreach($arrays as $k => $item){
-	  $filteredArr[$i]=$item;
-	  unset($arrays[$k]);
-	  $i++;
-	}
   }
 	$keysArr = array_keys($filteredArr);
-
-
 
   if (count($keysArr) > 0) {
     $startPos[] = $keysArr[0];
@@ -142,7 +140,6 @@ foreach ($request as $value) {
     }
   }
 }
-
 if ((count(array_unique($startPos)) === 1) && (count(array_unique($endPos)) === 1)) {
   http_response_code(200);
   echo json_encode($request);
